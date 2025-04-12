@@ -10,7 +10,7 @@ body {
     overflow: hidden;
     margin: 0px;
     padding: 0px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Calibri, Arial, system-ui, sans-serif;
     font-size: 13px;
     background: url('https://ia801705.us.archive.org/16/items/windows-xp-bliss-wallpaper/windows-xp-bliss-4k-lu-1920x1080.jpg') no-repeat center center fixed;
     background-size: cover;
@@ -53,10 +53,10 @@ body {
   display: flex;
   flex-direction: column;
   text-align: right;
-  padding: 5px 10px;
+  padding: 4px 10px;
 }
-#time { font-size: 11px; }
-#date { font-size: 11px; margin-top: 4px; }
+#time { font-size: 12px; }
+#date { font-size: 12px; margin-top: 3px; }
 
 .start-button {
     padding-left: 5px;
@@ -83,21 +83,13 @@ p { color: var(--text-regular-color); }
 h1, h2, h3, h4, h5, h6 { color: var(--h1-6-color); margin: 0px; }
 hr { color: var(--btn-color); }
 
-/* ICON CONTROL */
-.icon {
-    stroke: var(--icon-color);
-    height: 15px;
-    width: 15px;
-    margin: 0 0;
-}
-
 /* DROPDOWN STYLE */
 .dropdown_button { border: none; }
 .dropdown { position: relative; display: block; }
 .dropdown_content {
     display: none;
     position: absolute;
-    background-color: var(--header-color);
+    background-color: #f0f0f0;
     width: max-content;
     border-radius: 4px;
     box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.1);
@@ -159,7 +151,7 @@ hr { color: var(--btn-color); }
     height: 56px;
     position: fixed;
     top: -30px;
-    right: 52px;
+    right: 54px;
 }
 #profile_border {
     background: linear-gradient(
@@ -174,7 +166,7 @@ hr { color: var(--btn-color); }
     height: 66px;
     position: fixed;
     top: -34px;
-    right: 48px;
+    right: 50px;
 }
 #directory_list {
     margin-top: 30px;
@@ -201,7 +193,7 @@ hr { color: var(--btn-color); }
     border: 1px rgba(31, 31, 31, 0.5) solid;
     border-radius: 3px;
     padding: 4px 4px 4px 7px;
-    box-shadow: 
+    box-shadow:
         inset 0px 6px 10px -4px rgba(255, 255, 255, 0.2),
         inset 0px -6px 10px -4px rgba(255, 255, 255, 0.2);
 }
@@ -216,7 +208,6 @@ hr { color: var(--btn-color); }
 
 
 /* Sticky Note Styling & Control */
-#note-container { position: relative; width: 100%; height: 100%; }
 .sticky-note {
     position: absolute;
     width: 200px;
@@ -234,15 +225,22 @@ hr { color: var(--btn-color); }
     flex-direction: column;
     transition: box-shadow 0.2s ease-in-out;
     font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 12px;
 }
 .sticky-note:hover { box-shadow: 4px 4px 10px rgba(0,0,0,0.3); }
+.sticky-blue   { background: linear-gradient(to bottom, #d6f3fe 0%, #b9dcf6 100%); }
+.sticky-green  { background: linear-gradient(to bottom, #d0fdc7 0%, #b0eaac 100%); }
+.sticky-pink   { background: linear-gradient(to bottom, #f9d0f8 0%, #ebb0ec 100%); }
+.sticky-purple   { background: linear-gradient(to bottom, #dedaff 0%, #c5beeb 100%); }
+.sticky-white   { background: linear-gradient(to bottom, #fefefe 0%, #eae8e8 100%); }
+.sticky-yellow { background: linear-gradient(to bottom, #fefeca 0%, #fbf99c 100%); }
 .note-header {
     background: #f7f7b3;
     height: 20px;
     padding: 4px 6px;
     user-select: none;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 }
 .note-controls { display: none; gap: 4px; }
@@ -255,14 +253,91 @@ hr { color: var(--btn-color); }
     background-color: transparent;
     width: 20px;
     height: 20px;
-    font-size: 15px;
+    font-size: 17px;
     line-height: 18px;
     text-align: center;
     cursor: pointer;
     padding: 0;
+    color: #84814c;
+    
 }
 .add-note-btn { cursor: pointer; }
-.note-add-btn { border: none; background-color: transparent; } /* add new note button */
+.note-add-btn { border: none; background-color: transparent; position: absolute; top: 4px; left: 6px; font-size: 15px; font-weight: 550; } /* add new note button */
+/* Pick color dropdown */
+.color-menu {
+    padding: 2px;
+    background: #f0f0f0;
+    border: 1px rgba(31, 31, 31, 0.5) solid;
+    box-shadow: 4px 4px 2px rgba(0,0,0,0.3);
+    z-index: 999;
+    width: 150px;
+}
+.color-option {
+    display: flex;
+    align-items: left;
+    cursor: default;
+    padding: 3px 3px;
+}
+.color-option span { border-left: 1px rgba(31, 31, 31, 0.5) solid; padding-left: 4px;}
+.color-option:hover {
+    border-radius: 3px;
+    border: 1px #c1cdd9 solid;
+    padding: 2px 2px;
+    box-shadow:
+        inset 0px 6px 10px -4px rgba(231, 244, 255, 1),
+        inset 0px -6px 10px -4px rgba(231, 244, 255, 1);
+}
+.color-swatch {
+  width: 14px;
+  height: 14px;
+  margin-right: 4px;
+  border: 1px rgba(31, 31, 31, 0.5) solid;
+  box-shadow:
+        inset 0px 8px 1px -4px rgba(0, 0, 0, 0.1),
+        inset 0px -6px 6px -4px rgba(0, 0, 0, 0.2);
+}
+
+
+#menu_example {
+    position: fixed;
+    top: 60px;
+    left: 80px;
+}
+.menu {
+    display: flex;
+    background: #f0f0f0;
+    border: 1px rgba(31, 31, 31, 0.5) solid;
+    box-shadow: 4px 4px 2px rgba(0,0,0,0.3);
+    z-index: 999;
+    width: 150px;
+}
+.menu.column { display: block; }
+#icons_bar {
+    width: 20px;
+}
+.option {
+    display: flex;
+    align-items: left;
+    cursor: default;
+    padding: 3px 3px;
+}
+.option:hover {
+    border-radius: 3px;
+    border: 1px #c1cdd9 solid;
+    padding: 2px 2px;
+    box-shadow:
+        inset 0px 6px 10px -4px rgba(231, 244, 255, 1),
+        inset 0px -6px 10px -4px rgba(231, 244, 255, 1);
+}
+.options_group {
+    padding: 2px;
+    border-left: 1px rgba(31, 31, 31, 0.5) solid;
+    width: 100%;
+}
+.options_group.middle {
+    border-top: 1px rgba(31, 31, 31, 0.5) solid;
+    border-bottom: 1px rgba(31, 31, 31, 0.5) solid;
+}
 
 
 
@@ -274,7 +349,62 @@ hr { color: var(--btn-color); }
         <svg>icon</svg>
         <span>My Resumé</span>
     </div>
-    <div id="note-container"></div>
+    <div id="menu_example" class="menu">
+        <div id="icons_bar"></div>
+        <div class="columns">
+            <div id="copy_options" class="options_group">
+                <div class="option">
+                    <span>Cut</span>
+                </div>
+                <div class="option">
+                    <span>Copy</span>
+                </div>
+                <div class="option">
+                    <span>Paste</span>
+                </div>
+                <div class="option">
+                    <span>Delete</span>
+                </div>
+            </div>
+            <div id="text_options" class="options_group middle">
+                <div class="option">
+                    <span>Select All</span>
+                </div>
+            </div>
+            <div id="color_options" class="options_group">
+                <div class="option">
+                    <div class="color-swatch"></div>
+                    <span>White</span>
+                </div>
+                <div class="option">
+                    <div class="color-swatch"></div>
+                    <span>White</span>
+                </div>
+                <div class="option">
+                    <div class="color-swatch"></div>
+                    <span>White</span>
+                </div>
+                <div class="option">
+                    <div class="color-swatch"></div>
+                    <span>White</span>
+                </div>
+                <div class="option">
+                    <div class="color-swatch"></div>
+                    <span>White</span>
+                </div>
+                <div class="option">
+                    <div class="color-swatch"></div>
+                    <span>White</span>
+                </div>
+                <div class="option">
+                    <div class="color-swatch"></div>
+                    <span>White</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
     
 </div>
 <div id="taskbar" class="taskbar">
@@ -509,16 +639,93 @@ function updateClock() {
 setInterval(updateClock, 1000);
 
 // Sticky Note functionality
-const container = document.getElementById('note-container');
+const container = document.getElementById('desktop');
 const globalAddBtn = document.querySelector('.add-note-btn');
+const colors = {
+    blue: { class: 'sticky-blue', header: '#cbebf7' },
+    green: { class: 'sticky-green', header: '#c0f4ba' },
+    pink: { class: 'sticky-pink', header: '#f3c4f1' },
+    purple: { class: 'sticky-purple', header: '#d4cef4' },
+    white: { class: 'sticky-white', header: '#f4f5f1' },
+    yellow: { class: 'sticky-yellow', header: '#f7f7b3' }
+};
 
-globalAddBtn.addEventListener('click', createStickyNote);
+let zIndexCounter = 1;
 
-function createStickyNote(left = 100, top = 100) {
+globalAddBtn.addEventListener('click', () => createStickyNote());
+
+// Saves notes for user
+function saveNotes() {
+    const notes = Array.from(document.querySelectorAll('.sticky-note')).map(note => ({
+        left: note.style.left,
+        top: note.style.top,
+        width: note.style.width,
+        height: note.style.height,
+        text: note.querySelector('.note-content').innerText,
+        zIndex: note.style.zIndex,
+        color: note.dataset.color || 'yellow'
+    }));
+    localStorage.setItem('stickyNotes', JSON.stringify(notes));
+}
+
+// Changes sticky note color
+function applyNoteColor(note, colorKey) {
+    Object.values(colors).forEach(c => note.classList.remove(c.class));
+    const colorData = colors[colorKey] || colors.yellow;
+    note.classList.add(colorData.class);
+    note.querySelector('.note-header').style.backgroundColor = colorData.header;
+    note.dataset.color = colorKey;
+}
+
+// Control for right click context menu to change color
+function showColorMenu(x, y, note) {
+    const existingMenu = document.querySelector('.color-menu');
+    if (existingMenu) existingMenu.remove();
+
+    const menu = document.createElement('div');
+    menu.classList.add('color-menu');
+
+    Object.entries(colors).forEach(([key, val]) => {
+        const option = document.createElement('div');
+        option.classList.add('color-option');
+
+        const swatch = document.createElement('div');
+        swatch.classList.add('color-swatch');
+        swatch.style.background = val.header;
+
+        const label = document.createElement('span');
+        label.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+
+        option.appendChild(swatch);
+        option.appendChild(label);
+
+        option.addEventListener('click', () => {
+            applyNoteColor(note, key);
+            menu.remove();
+            saveNotes();
+        });
+
+        menu.appendChild(option);
+    });
+
+    document.body.appendChild(menu);
+    menu.style.position = 'absolute';
+    menu.style.left = `${x}px`;
+    menu.style.top = `${y}px`;
+
+    document.addEventListener('click', () => menu.remove(), { once: true });
+}
+
+// Creates new notes
+function createStickyNote(left = 100, top = 100, text = 'Type something...', color = 'yellow', width = '200px', height = '200px') {
     const note = document.createElement('div');
     note.classList.add('sticky-note');
     note.style.left = `${left}px`;
     note.style.top = `${top}px`;
+    note.style.width = width;
+    note.style.height = height;
+    note.style.zIndex = zIndexCounter++;
+    note.dataset.color = color;
 
     const header = document.createElement('div');
     header.classList.add('note-header');
@@ -530,7 +737,10 @@ function createStickyNote(left = 100, top = 100) {
     deleteBtn.innerText = '×';
     deleteBtn.classList.add('note-btn');
     deleteBtn.title = 'Delete';
-    deleteBtn.addEventListener('click', () => note.remove());
+    deleteBtn.addEventListener('click', () => {
+        note.remove();
+        saveNotes();
+    });
 
     const spawnBtn = document.createElement('button');
     spawnBtn.innerText = '+';
@@ -544,18 +754,33 @@ function createStickyNote(left = 100, top = 100) {
     controls.appendChild(spawnBtn);
     controls.appendChild(deleteBtn);
     header.appendChild(controls);
+    note.appendChild(header);
+    applyNoteColor(note, color);
 
     const content = document.createElement('div');
     content.classList.add('note-content');
     content.contentEditable = true;
-    content.innerText = 'Type something...';
+    content.innerText = text;
 
-    // Mark as "editing" when focused, remove on blur
     content.addEventListener('focus', () => note.classList.add('editing'));
-    content.addEventListener('blur', () => note.classList.remove('editing'));
+    content.addEventListener('blur', () => {
+        note.classList.remove('editing');
+        saveNotes();
+    });
 
     note.appendChild(header);
     note.appendChild(content);
+
+    // Right-click to change color
+    note.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        showColorMenu(e.pageX, e.pageY, note);
+    });
+
+    // Bring to front on click
+    note.addEventListener('mousedown', () => {
+        note.style.zIndex = zIndexCounter++;
+    });
 
     // Dragging from header
     header.addEventListener('mousedown', function (e) {
@@ -577,14 +802,41 @@ function createStickyNote(left = 100, top = 100) {
 
         document.addEventListener('mouseup', function () {
             document.removeEventListener('mousemove', onMouseMove);
+            saveNotes();
         }, { once: true });
     });
 
     note.ondragstart = () => false;
 
     container.appendChild(note);
+
+    // Observe size changes and save
+    const resizeObserver = new ResizeObserver(() => {
+        saveNotes();
+    });
+    resizeObserver.observe(note);
+    saveNotes(); // Save right after creating
 }
 
+// Load notes on page load (inital & saved notes)
+window.addEventListener('DOMContentLoaded', () => {
+    const savedNotes = JSON.parse(localStorage.getItem('stickyNotes')) || [];
+    savedNotes.forEach(noteData => {
+        createStickyNote(
+            parseInt(noteData.left),
+            parseInt(noteData.top),
+            noteData.text,
+            noteData.color,
+            noteData.width || '200px',
+            noteData.height || '200px'
+        );
+    });
+
+    if (savedNotes.length === 0) {
+        createStickyNote(150, 150, "Welcome to my site! Try clicking + to make new notes! Or right click to change the color!");
+        createStickyNote(300, 250, "These sticky notes are persistent, so if you make new notes and then reload the site, they'll still be here!");
+    }
+});
 
 
 

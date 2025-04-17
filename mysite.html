@@ -197,7 +197,6 @@ hr { color: var(--btn-color); }
         inset 0px 6px 10px -4px rgba(255, 255, 255, 0.2),
         inset 0px -6px 10px -4px rgba(255, 255, 255, 0.2);
 }
-
 #shutdown_options {
     position: fixed;
     bottom: 10px;
@@ -206,6 +205,62 @@ hr { color: var(--btn-color); }
     display: flex;
 }
 
+/* Desktop Shortcuts Styling */
+#desktop {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+.desktop_shortcut {
+    position: absolute;
+    width: 70px;
+    min-height: 70px;
+    text-align: center;
+    padding: 2px;
+    margin: 2px;
+    user-select: none;
+    cursor: default;
+}
+.desktop_shortcut .icon svg {
+    width: 45px;
+    height: 45px;
+}
+.desktop_shortcut .title span {
+    color: #fff;
+    font-family: Calibri, Arial, system-ui, sans-serif;
+    text-shadow: 1px 1px 2px #111;
+    text-wrap: balance;
+}
+.desktop_shortcut:hover {
+    border: 1px #b4d4f9 solid;
+    background: rgba(154, 184, 221, 0.5);
+    border-radius: 2px;
+    padding: 1px;
+}
+.desktop_shortcut.selected {
+    border: 1px #b4d4f9 solid;
+    background: rgba(154, 184, 221, 0.5);
+    border-radius: 2px;
+}
+.desktop_shortcut .title span,
+.desktop_shortcut .title input {
+    display: block;
+    color: #fff;
+    font-family: Calibri, Arial, sans-serif;
+    text-shadow: 1px 1px 2px #111;
+    width: 100%;
+    text-align: center;
+    background: transparent;
+    border: none;
+    color: white;
+}
+.selection-box {
+    position: absolute;
+    border: 1px dashed #89b;
+    background: rgba(100, 150, 255, 0.2);
+    pointer-events: none;
+    z-index: 1000;
+}
 
 /* Sticky Note Styling & Control */
 .sticky-note {
@@ -268,7 +323,7 @@ hr { color: var(--btn-color); }
     padding: 2px;
     background: #f0f0f0;
     border: 1px rgba(31, 31, 31, 0.5) solid;
-    box-shadow: 4px 4px 2px rgba(0,0,0,0.3);
+    box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.3);
     z-index: 999;
     width: 150px;
 }
@@ -297,7 +352,7 @@ hr { color: var(--btn-color); }
         inset 0px -6px 6px -4px rgba(0, 0, 0, 0.2);
 }
 
-
+/*TESTING RIIGHT CLICK DROPDOWN MENU*/
 #menu_example {
     position: fixed;
     top: 60px;
@@ -338,6 +393,87 @@ hr { color: var(--btn-color); }
     border-top: 1px rgba(31, 31, 31, 0.5) solid;
     border-bottom: 1px rgba(31, 31, 31, 0.5) solid;
 }
+.disabled { color: #84814c; }
+
+
+/* Clock Widget Styling */
+.clock-widget {
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle at center, #e3e3e3 0%, #ccc 100%);
+    border: 2px solid #888;
+    border-radius: 50%;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    position: absolute;
+    top: 100px;
+    right: 50px;
+}
+.clock-face {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform: rotate(90deg); /* To align 12 o'clock upwards */
+}
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    background: #333;
+    border-radius: 2px;
+}
+.hour {
+    height: 40px;
+    width: 6px;
+    background: #333;
+}
+.minute {
+    height: 60px;
+    width: 4px;
+    background: #555;
+}
+.second {
+    height: 60px;
+    width: 2px;
+    background: red;
+}
+.center-dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: black;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+
+/* Puzzle Wdget Styling */
+.puzzle-widget {
+    width: 200px;
+    height: 200px;
+    border: 2px solid #888;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    background: #ddd;
+    position: absolute;
+    top: 300px;
+    right: 50px;
+}
+.puzzle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 100%;
+    height: 100%;
+}
+.tile {
+    background-image: url('your-image.jpg'); /* Replace with your image */
+    background-size: 300px 300px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+}
 
 
 
@@ -345,15 +481,197 @@ hr { color: var(--btn-color); }
 </head>
 <body>
 <div id="desktop">
-    <div id="resume_document" class="desktop_shortcut">
-        <svg>icon</svg>
-        <span>My Resumé</span>
+    <div id="recycle_bin" class="desktop_shortcut" data-id="recycle_bin">
+        <div class="icon"></div>
+        <div class="title">
+            <span>Recycle Bin</span>
+        </div>
+    </div>
+    <div id="portfolio_link" class="desktop_shortcut" data-id="portfolio_link">
+        <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 -6 313 313">
+                <defs>
+                    <radialGradient xlink:href="#a" id="e" cx="173.96" cy="149.58" r="161.64" gradientTransform="matrix(0 1 -.8 0 293.62 -24.38)">
+                        <stop offset=".55" stop-color="#99fbff"/>
+                        <stop offset=".61" stop-color="#92f6fe"/>
+                        <stop offset=".7" stop-color="#80e7fa"/>
+                        <stop offset=".8" stop-color="#62cff3"/>
+                        <stop offset=".91" stop-color="#38adea"/>
+                        <stop offset="1" stop-color="#0f8ce1"/>
+                    </radialGradient>
+                    <radialGradient xlink:href="#a" id="o" cx="62.968" cy="220.74" r="48.326" gradientTransform="matrix(3.4175 -2.0751 1.0888 1.7931 -389.83 -12.808)">
+                        <stop offset="0" stop-color="#fcf69f" stop-opacity="0"/>
+                        <stop offset=".5" stop-color="#fcf69f" stop-opacity="0"/>
+                        <stop offset="1" stop-color="#fcf69f" stop-opacity=".77"/>
+                    </radialGradient>
+                    <radialGradient xlink:href="#a" id="k" cx="100.32" cy="148.8" r="138.81" gradientTransform="matrix(.9302 -.83744 .32785 .36414 17.035 155.03)">
+                        <stop offset="0" stop-color="#f8b633" stop-opacity="0"/>
+                        <stop offset=".83" stop-color="#fabc3f" stop-opacity="0"/>
+                        <stop offset=".92" stop-color="#fdf8c3" stop-opacity=".98"/>
+                        <stop offset=".96" stop-color="#fdf8c3" stop-opacity=".98"/>
+                        <stop offset="1" stop-color="#fdf6b0" stop-opacity=".98"/>
+                    </radialGradient>
+                    <radialGradient xlink:href="#a" id="p" cx="138.27" cy="245.02" r="84.078" gradientTransform="matrix(1.3738 -1.4223 .47637 .46011 -146.79 229.99)">
+                        <stop offset="0" stop-color="#3d3a04" stop-opacity="0"/>
+                        <stop offset=".924" stop-color="#454205" stop-opacity="0"/>
+                        <stop offset="1" stop-color="#4e4a06" stop-opacity=".27"/>
+                    </radialGradient>
+                    <radialGradient xlink:href="#a" id="n" cx="92.079" cy="70.362" r="64.365" gradientTransform="matrix(1.82 .03223 -.03882 2.1923 -73.94 -85.114)">
+                        <stop offset="0" stop-color="#a0f5fc"/>
+                        <stop offset="1" stop-color="#a0f3fc" stop-opacity="0"/>
+                    </radialGradient>
+                    <radialGradient xlink:href="#a" id="b" cx="136.1" cy="93.932" r="157.94" gradientTransform="matrix(.67825 -.45732 .55906 .82913 -15.248 63.774)">
+                        <stop offset="0" stop-color="#fcfcfc"/>
+                        <stop offset=".681" stop-color="#ffffff"/>
+                        <stop offset="1"/>
+                    </radialGradient>
+                    <radialGradient xlink:href="#a" id="h" cx="160.08" cy="156.25" r="138.81" gradientTransform="matrix(1.0704 -1.0538 .44083 .44775 -75.068 245.37)">
+                        <stop offset="0" stop-opacity="0"/>
+                        <stop offset=".82" stop-color="#fdbb36" stop-opacity=".94"/>
+                        <stop offset=".89" stop-color="#fbd44d" stop-opacity=".92"/>
+                        <stop offset="1" stop-color="#fbcf39" stop-opacity=".88"/>
+                    </radialGradient>
+                    <radialGradient xlink:href="#a" id="i" cx="180.99" cy="167.23" r="138.81" gradientTransform="matrix(1.1348 -1.1322 .52964 .53081 -114.38 274.24)">
+                        <stop offset="0" stop-color="#f7ab32" stop-opacity="0"/>
+                        <stop offset=".76" stop-color="#f7b535" stop-opacity=".92"/>
+                        <stop offset=".84" stop-color="#f7b33f" stop-opacity=".96"/>
+                        <stop offset=".93" stop-color="#f7e232"/>
+                        <stop offset="1" stop-color="#f5ec80"/>
+                    </radialGradient>
+                    <radialGradient xlink:href="#a" id="m" cx="-2.5" cy="136.62" r="138.81" gradientTransform="matrix(.85784 -.85837 .28831 .28814 123.22 99.466)">
+                        <stop offset="0"/>
+                        <stop offset=".94" stop-color="#fee259" stop-opacity=".5"/>
+                        <stop offset="1" stop-color="#fff045" stop-opacity="0"/>
+                    </radialGradient>
+                    <radialGradient xlink:href="#a" id="c" cx="222.81" cy="221.24" r="156.35" gradientTransform="matrix(1.1049 -.66263 .37599 .62704 -95.652 198.56)">
+                        <stop offset="0"/>
+                        <stop offset=".672"/>
+                        <stop offset="1" stop-color="#ffffff"/>
+                    </radialGradient>
+                    <radialGradient xlink:href="#a" id="d" cx="101.97" cy="109.66" r="158" gradientTransform="matrix(.84189 -.58292 .28064 .4054 -11.053 122.85)">
+                        <stop offset="0" stop-color="#ffffff"/>
+                        <stop offset=".69" stop-color="#ffffff"/>
+                        <stop offset="1"/>
+                    </radialGradient>
+                    <mask id="l" maskUnits="userSpaceOnUse">
+                        <path fill="url(#b)" fill-rule="evenodd" stroke="#000000" d="M.5-12.389h314.89v314.89H.5z"/>
+                    </mask>
+                    <mask id="f" maskUnits="userSpaceOnUse">
+                        <path fill="url(#c)" fill-rule="evenodd" d="M0-.374h312.71v302.26H0z"/>
+                    </mask>
+                    <mask id="j" maskUnits="userSpaceOnUse">
+                        <path fill="url(#d)" fill-rule="evenodd" stroke="#000000" d="M.5-12.5h315v315H.5z"/>
+                    </mask>
+                    <linearGradient id="a" gradientUnits="userSpaceOnUse"/>
+                    <path id="g" d="M108.75 260.53c-27.7 14.08-50 17.08-61.5 5.6-25-25 7.8-94.8 74.3-161.32S257.86 5.5 282.9 30.52c10.13 10.13 9 28.72-1.14 52q2.1 3.34 4 6.82c13.47-31.15 14.25-57.5-1.46-73.2-28.75-29.12-126.4 4.2-186.67 67.3S-.16 242.8 27.74 271.4c18.14 18.14 51.2 13.87 89.56-6.43q-4.38-2.05-8.55-4.43z"/>
+                </defs>
+                <path fill="url(#e)" stroke="#1b62a2" stroke-opacity=".878" stroke-width="4.913" d="M226.06 194.2c-10.23 17.2-29.93 28.53-51.3 28.53a56.08 56.08 0 0 1-56.28-56v-2.2H298a125.85 125.85 0 0 0 .77-13.88A124.27 124.27 0 0 0 174.44 25.82c-69.08 0-125.9 55.76-125.9 124.84 0 22.48 6.47 43.56 16.7 61.75 9.15 16.27 21.16 30.23 36.5 40.8 20.22 13.92 45.5 21.58 72 21.58 27.95 0 54.67-8.54 75.7-23.84A122 122 0 0 0 292 194.19zM176.56 79c30.52 0 53.3 24.3 54.13 54.6H118.2c.97-30.3 27.8-54.6 58.37-54.6z" paint-order="stroke markers fill"/>
+                <g mask="url(#f)">
+                    <use xlink:href="#g" fill="url(#h)"/>
+                    <path fill="url(#i)" d="M108.75 260.53c-27.7 14.08-50 17.08-61.5 5.6-25-25 7.8-94.8 74.3-161.32S257.86 5.5 282.9 30.52c10.13 10.13 9 28.72-1.14 52q2.1 3.34 4 6.82c13.47-31.15 14.25-57.5-1.46-73.2-28.75-29.12-126.4 4.2-186.67 67.3S-.16 242.8 27.74 271.4c18.14 18.14 51.2 13.87 89.56-6.43q-4.38-2.05-8.55-4.43z" mask="url(#j)" opacity=".93"/>
+                    <path fill="url(#k)" d="M108.75 260.53c-27.7 14.08-50 17.08-61.5 5.6-25-25 7.8-94.8 74.3-161.32S257.86 5.5 282.9 30.52c10.13 10.13 9 28.72-1.14 52q2.1 3.34 4 6.82c13.47-31.15 14.25-57.5-1.46-73.2-28.75-29.12-126.4 4.2-186.67 67.3S-.16 242.8 27.74 271.4c18.14 18.14 51.2 13.87 89.56-6.43q-4.38-2.05-8.55-4.43z" mask="url(#l)" opacity=".835"/>
+                    <use xlink:href="#g" fill="url(#m)"/>
+                </g>
+                <path fill="url(#n)" d="M174.44 27.82c-68.937 0-125.66 55.53-125.89 124.41 13.174-23.455 29.981-46.791 49.086-66.793 23.061-24.144 51.592-43.919 79.645-57.514l-2.836-.105z" transform="translate(0 -2)"/>
+                <path fill="url(#o)" d="M46.15 154.56c12.851-24.577 33.552-52.853 50.53-70.16-19.184 16.918-38.242 38.928-50 53.93C4.16 193.01-8.37 240.79 5.33 264.03c11.08 18.8 32.27 23.17 53 18.83-12.4-.08-22.86-3.75-30.6-11.48-18.48-18.97-8.2-67.73 18.4-116.82z" opacity=".877"/>
+                <path fill="url(#p)" d="M217.33 35.551c-28.801 13.432-62.699 38.165-95.781 71.258-29.291 29.3-52.032 59.233-66.188 85.697a131.825 131.825 0 0 0 4.354 10.953c6.442-25.294 32.58-54.181 64.28-92.234 1.748-2.1 3.675-5.125 5.817-7.215a59.603 59.603 0 0 1 14.154-13.086c29.88-18.073 54.304-40.563 79.551-52.885a124.255 124.255 0 0 0-6.187-2.488z" transform="translate(0 -2)"/>
+            </svg>
+        </div>
+        <div class="title">
+            <span>Photography Portfolio</span>
+        </div>
+    </div>
+    <div id="resume_document" class="desktop_shortcut" data-id="resume_document">
+        <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="46.14" height="44.893">
+                <defs>
+                    <linearGradient id="j1">
+                        <stop offset="0" stop-color="#96afee"/>
+                        <stop offset="1" stop-color="#0042a1"/>
+                    </linearGradient>
+                    <linearGradient id="i1">
+                        <stop offset="0" stop-color="#fff"/>
+                        <stop offset="1" stop-color="#d8d8d8"/>
+                    </linearGradient>
+                    <linearGradient id="h1">
+                        <stop offset="0" stop-color="#7496e9"/>
+                        <stop offset="1" stop-color="#003177"/>
+                    </linearGradient>
+                    <linearGradient id="g1">
+                        <stop offset="0" stop-color="#98b7e4"/>
+                        <stop offset="1" stop-color="#fff"/>
+                    </linearGradient>
+                    <linearGradient id="f1">
+                        <stop offset="0" stop-color="#aacaf3"/>
+                        <stop offset="1" stop-color="#81a1ce"/>
+                    </linearGradient>
+                    <linearGradient id="e1">
+                        <stop offset="0" stop-color="#e4eeff"/>
+                        <stop offset="1" stop-color="#81a1ce"/>
+                    </linearGradient>
+                    <linearGradient id="d1">
+                        <stop offset="0" stop-color="#659bf4"/>
+                        <stop offset="1" stop-color="#c3ccdf"/>
+                    </linearGradient>
+                    <linearGradient id="c1">
+                        <stop offset="0" stop-color="#e4eeff"/>
+                        <stop offset="1" stop-color="#abc0e2"/>
+                    </linearGradient>
+                    <linearGradient id="a1">
+                        <stop offset="0" stop-color="#c4d8f8"/>
+                        <stop offset="1" stop-color="#fff"/>
+                    </linearGradient>
+                    <linearGradient id="b1">
+                        <stop offset="0" stop-color="#b1bfd1"/>
+                        <stop offset="1" stop-color="#364a60"/>
+                    </linearGradient>
+                    <linearGradient xlink:href="#a1" id="l1" gradientUnits="userSpaceOnUse" x1="393.861" y1="509.719" x2="375.513" y2="488.997"/>
+                    <linearGradient xlink:href="#b1" id="m1" gradientUnits="userSpaceOnUse" x1="363.623" y1="469.966" x2="399.725" y2="513.842"/>
+                    <linearGradient xlink:href="#c1" id="k1" x1="390.823" y1="470.178" x2="394.455" y2="479.972" gradientUnits="userSpaceOnUse"/>
+                    <linearGradient xlink:href="#d1" id="n1" x1="398.771" y1="512.53" x2="376.913" y2="492.915" gradientUnits="userSpaceOnUse"/>
+                    <linearGradient xlink:href="#e1" id="o1" x1="367.322" y1="480.509" x2="394.445" y2="508.527" gradientUnits="userSpaceOnUse"/>
+                    <linearGradient xlink:href="#f1" id="q1" x1="388.702" y1="485.948" x2="389.178" y2="486.396" gradientUnits="userSpaceOnUse"/>
+                    <linearGradient xlink:href="#g1" id="p1" x1="393.262" y1="489.536" x2="386.188" y2="481.387" gradientUnits="userSpaceOnUse"/>
+                    <linearGradient xlink:href="#h1" id="s1" x1="354.586" y1="474.986" x2="374.771" y2="494.546" gradientUnits="userSpaceOnUse"/>
+                    <linearGradient xlink:href="#i1" id="r1" x1="354.586" y1="474.986" x2="374.771" y2="494.546" gradientUnits="userSpaceOnUse"/>
+                    <linearGradient xlink:href="#j1" x1="356.107" y1="476.006" x2="373.659" y2="493.609" gradientUnits="userSpaceOnUse"/>
+                    <linearGradient xlink:href="#j1" x1="355.242" y1="475.464" x2="374.22" y2="494.441" gradientUnits="userSpaceOnUse"/>
+                    <linearGradient xlink:href="#j1" id="t1" gradientUnits="userSpaceOnUse" x1="356.107" y1="476.006" x2="373.659" y2="493.609"/>
+                    <linearGradient xlink:href="#j1" id="u1" gradientUnits="userSpaceOnUse" x1="355.242" y1="475.464" x2="374.22" y2="494.441"/>
+                    <filter id="x" color-interpolation-filters="sRGB">
+                        <feGaussianBlur stdDeviation=".088"/>
+                    </filter>
+                    <filter id="v" color-interpolation-filters="sRGB">
+                        <feGaussianBlur stdDeviation=".088"/>
+                    </filter>
+                    <filter id="w" color-interpolation-filters="sRGB">
+                        <feGaussianBlur stdDeviation=".088"/>
+                    </filter>
+                </defs>
+                <path d="M399.637 479.304l-.15-1.578-7.824-7.8-1.45-.038-.61 10.598z" fill="url(#k)" stroke="#4f657b" transform="translate(-354.11 -469.388)"/>
+                <path d="M363.688 469.906v43.875h36.062v-35.937h-9.188c-.009 0 0-.022 0-.031v-7.907h-26.875z" fill="url(#l1)" stroke="url(#m1)" transform="translate(-354.11 -469.388)"/>
+                <g transform="translate(-354.11 -469.388)">
+                    <path d="M365.25 512.813h33.406c.01 0 0-.022 0-.032v-33.968c0-.01.01-.032 0-.032h-7.469 0" fill="none" stroke="url(#n1)" stroke-width="1.022"/>
+                    <path d="M367.188 480.875h15.968-15.969zm0 3h15.968-15.969zm0 3h15.968-15.969zm0 3h15.968-15.969zm0 3h26.968-26.969zm0 2.969h26.968-26.969zm0 3h26.968-26.969zm0 3.031h26.968-26.969zm0 2.969h26.968-26.969zm0 3h26.968-26.969z" fill="none" stroke="url(#o1)"/>
+                    <rect width="8.037" height="9.034" x="385.65" y="480.87" ry="0" fill="url(#p1)" stroke="url(#q1)"/>
+                </g>
+                <path fill="url(#r1)" stroke="url(#s1)" d="M354.61 474.881h20.084v19.982H354.61z" transform="translate(-354.11 -469.388)"/>
+                <path fill="#fff" stroke="url(#t1)" stroke-width="1.002" d="M355.603 475.775h18.083v18.118h-18.083z" transform="translate(-354.11 -469.388)"/>
+                <path d="M357.093 479.323h6.132v2.061l-2.05 1.184v1.83l2.895-3.014v-2.009h3.067v5.075l2.114-3.119h-1.11v-1.956h5.18v2.01h-.792l-5.075 9.99h-3.225v-3.964l-3.859 3.912h-2.22v-10.045h-.952z" fill="url(#u1)" transform="translate(-354.11 -469.388)"/>
+                <path d="M371.789 481.649l-4.705 9.303h-1.48" opacity=".322" fill="none" stroke="#000" filter="url(#v1)" transform="translate(-354.11 -469.388)"/>
+                <path d="M369.463 481.701l-2.326 3.33-.533-.142.11-5.09h-1.058l-4.07 5.233h-.793v1.216-3.49" opacity=".322" fill="none" stroke="#000" filter="url(#w1)" transform="translate(-354.11 -469.388)"/>
+                <path d="M364.018 487.146l-3.833 3.833h-.555" opacity=".322" fill="none" stroke="#000" filter="url(#x1)" transform="translate(-354.11 -469.388)"/>
+            </svg>
+        </div>
+        <div class="title">
+            <span>My Resumé</span>
+        </div>
     </div>
     <div id="menu_example" class="menu">
         <div id="icons_bar"></div>
         <div class="columns">
             <div id="copy_options" class="options_group">
-                <div class="option">
+                <div class="option disabled">
                     <span>Cut</span>
                 </div>
                 <div class="option">
@@ -403,6 +721,17 @@ hr { color: var(--btn-color); }
             </div>
         </div>
         
+    </div>
+    <div class="widget clock-widget">
+        <div class="clock-face">
+            <div class="hand hour"></div>
+            <div class="hand minute"></div>
+            <div class="hand second"></div>
+            <div class="center-dot"></div>
+        </div>
+    </div>
+    <div class="widget puzzle-widget">
+        <div class="puzzle-grid" id="puzzle"></div>
     </div>
     
     
@@ -579,6 +908,9 @@ hr { color: var(--btn-color); }
         <div id="media_center" class="taskbar-item">
             Media Center Icon
         </div>
+        <div id="sticky_notes" class="taskbar-item">
+            <button class="add-note-btn">+ Add Note</button>
+        </div>
         <div id="outlook" class="taskbar-item">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30"  transform="translate(10 8)">
                 <g class="layer">
@@ -586,8 +918,96 @@ hr { color: var(--btn-color); }
                 </g>
             </svg>
         </div>
-        <div id="sticky_notes" class="taskbar-item">
-            <button class="add-note-btn">+ Add Note</button>
+        
+        <div id="word" class="taskbar-item">
+            <svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" width="35px" height="35px" viewBox="0 0 142.09696 142.5684" version="1.1" id="svg5" inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)" sodipodi:docname="Word icon.svg" transform="translate(8 7)">
+                <sodipodi:namedview id="namedview7" pagecolor="#ffffff" bordercolor="#000000" borderopacity="0.25" inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1" inkscape:document-units="mm" showgrid="false" inkscape:zoom="0.73851712" inkscape:cx="222.74365" inkscape:cy="315.49709" inkscape:window-width="1920" inkscape:window-height="1009" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1" inkscape:current-layer="layer1"/>
+                <defs id="defs2">
+                    <filter style="color-interpolation-filters:sRGB" inkscape:label="Drop Shadow" id="filter10995" x="-0.068655498" y="-0.068662509" width="1.167547" height="1.1643811">
+                        <feFlood flood-opacity="0.392157" flood-color="rgb(0,0,0)" result="flood" id="feFlood10985"/>
+                        <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite1" id="feComposite10987"/>
+                        <feGaussianBlur in="composite1" stdDeviation="2.8" result="blur" id="feGaussianBlur10989"/>
+                        <feOffset dx="2.9595" dy="2.64798" result="offset" id="feOffset10991"/>
+                        <feComposite in="SourceGraphic" in2="offset" operator="over" result="composite2" id="feComposite10993"/>
+                    </filter>
+                    <filter style="color-interpolation-filters:sRGB" inkscape:label="Drop Shadow" id="filter23178" x="-0.054017458" y="-0.050149422" width="1.1518575" height="1.1640304">
+                        <feFlood flood-opacity="0.270588" flood-color="rgb(0,0,0)" result="flood" id="feFlood23168"/>
+                        <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite1" id="feComposite23170"/>
+                        <feGaussianBlur in="composite1" stdDeviation="2" result="blur" id="feGaussianBlur23172"/>
+                        <feOffset dx="3.89408" dy="6.1" result="offset" id="feOffset23174"/>
+                        <feComposite in="SourceGraphic" in2="offset" operator="over" result="composite2" id="feComposite23176"/>
+                    </filter>
+                    <filter style="color-interpolation-filters:sRGB" inkscape:label="Drop Shadow" id="filter10995-6" x="-0.068655498" y="-0.068662509" width="1.167547" height="1.1643811">
+                        <feFlood flood-opacity="0.392157" flood-color="rgb(0,0,0)" result="flood" id="feFlood10985-4"/>
+                        <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite1" id="feComposite10987-4"/>
+                        <feGaussianBlur in="composite1" stdDeviation="2.8" result="blur" id="feGaussianBlur10989-9"/>
+                        <feOffset dx="2.9595" dy="2.64798" result="offset" id="feOffset10991-8"/>
+                        <feComposite in="SourceGraphic" in2="offset" operator="over" result="composite2" id="feComposite10993-2"/>
+                    </filter>
+                    <filter style="color-interpolation-filters:sRGB" inkscape:label="Drop Shadow" id="filter23178-8" x="-0.054017458" y="-0.050149422" width="1.1518575" height="1.1640304">
+                        <feFlood flood-opacity="0.270588" flood-color="rgb(0,0,0)" result="flood" id="feFlood23168-6"/>
+                        <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite1" id="feComposite23170-6"/>
+                        <feGaussianBlur in="composite1" stdDeviation="2" result="blur" id="feGaussianBlur23172-5"/>
+                        <feOffset dx="3.89408" dy="6.1" result="offset" id="feOffset23174-3"/>
+                        <feComposite in="SourceGraphic" in2="offset" operator="over" result="composite2" id="feComposite23176-6"/>
+                    </filter>
+                    <filter style="color-interpolation-filters:sRGB" inkscape:label="Drop Shadow" id="filter10995-2" x="-0.068655495" y="-0.06866251" width="1.167547" height="1.1643811">
+                        <feFlood flood-opacity="0.392157" flood-color="rgb(0,0,0)" result="flood" id="feFlood10985-7"/>
+                        <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite1" id="feComposite10987-2"/>
+                        <feGaussianBlur in="composite1" stdDeviation="2.8" result="blur" id="feGaussianBlur10989-1"/>
+                        <feOffset dx="2.9595" dy="2.64798" result="offset" id="feOffset10991-80"/>
+                        <feComposite in="SourceGraphic" in2="offset" operator="over" result="composite2" id="feComposite10993-5"/>
+                    </filter>
+                    <linearGradient inkscape:collect="always" xlink:href="#linearGradient1632" id="linearGradient1636" gradientUnits="userSpaceOnUse" x1="41.478756" y1="562.87982" x2="41.478756" y2="529.09723" gradientTransform="matrix(1.126444,0,0,1.126444,55.111373,-595.50146)"/>
+                    <linearGradient inkscape:collect="always" id="linearGradient1632">
+                        <stop style="stop-color:#6384bd;stop-opacity:1;" offset="0" id="stop1628"/>
+                        <stop style="stop-color:#c3d1e6;stop-opacity:1;" offset="1" id="stop1630"/>
+                    </linearGradient>
+                    <radialGradient inkscape:collect="always" xlink:href="#linearGradient3284" id="radialGradient4014" cx="857.45129" cy="381.9996" fx="857.45129" fy="381.9996" r="41.592106" gradientTransform="matrix(1.5255611,0,0,1.4764834,-1211.5767,-466.09268)" gradientUnits="userSpaceOnUse"/>
+                    <linearGradient inkscape:collect="always" id="linearGradient3284">
+                        <stop style="stop-color:#cedbf3;stop-opacity:0.52201259;" offset="0" id="stop3280"/>
+                        <stop style="stop-color:#2c58a5;stop-opacity:1;" offset="0.82315117" id="stop3282"/>
+                    </linearGradient>
+                    <linearGradient inkscape:collect="always" xlink:href="#linearGradient5528" id="linearGradient5530" x1="790.05585" y1="339.94781" x2="747.83728" y2="334.43243" gradientUnits="userSpaceOnUse" gradientTransform="translate(-674.39931,-272.448)"/>
+                    <linearGradient inkscape:collect="always" id="linearGradient5528">
+                        <stop style="stop-color:#e6f0f4;stop-opacity:1;" offset="0" id="stop5524"/>
+                        <stop style="stop-color:#fcfcfd;stop-opacity:1;" offset="1" id="stop5526"/>
+                    </linearGradient>
+                    <filter style="color-interpolation-filters:sRGB" inkscape:label="Drop Shadow" id="filter23178-7" x="-0.054017458" y="-0.050149424" width="1.1518575" height="1.1640304">
+                        <feFlood flood-opacity="0.270588" flood-color="rgb(0,0,0)" result="flood" id="feFlood23168-4"/>
+                        <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite1" id="feComposite23170-3"/>
+                        <feGaussianBlur in="composite1" stdDeviation="2" result="blur" id="feGaussianBlur23172-9"/>
+                        <feOffset dx="3.89408" dy="6.1" result="offset" id="feOffset23174-36"/>
+                        <feComposite in="SourceGraphic" in2="offset" operator="over" result="composite2" id="feComposite23176-1"/>
+                    </filter>
+                    <radialGradient inkscape:collect="always" xlink:href="#linearGradient8186" id="radialGradient8190" cx="848.29504" cy="337.51038" fx="848.29504" fy="337.51038" r="31.093124" gradientTransform="matrix(1.7228034,0,0,4.1561682,-619.22165,-1066.4306)" gradientUnits="userSpaceOnUse"/>
+                    <linearGradient inkscape:collect="always" id="linearGradient8186">
+                        <stop style="stop-color:#758dc6;stop-opacity:1;" offset="0" id="stop8182"/>
+                        <stop style="stop-color:#143e96;stop-opacity:1;" offset="1" id="stop8184"/>
+                    </linearGradient>
+                    <radialGradient inkscape:collect="always" xlink:href="#linearGradient8186" id="radialGradient9644" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.7228034,0,0,4.1561682,-619.22165,-1066.4306)" cx="848.29504" cy="337.51038" fx="848.29504" fy="337.51038" r="31.093124"/>
+                    <radialGradient inkscape:collect="always" xlink:href="#linearGradient8186" id="radialGradient9646" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.7228034,0,0,4.1561682,-620.14973,-1066.8681)" cx="848.29504" cy="337.51038" fx="848.29504" fy="337.51038" r="31.093124"/>
+                    <radialGradient inkscape:collect="always" xlink:href="#linearGradient8186" id="radialGradient9648" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.7228034,0,0,4.1561682,-619.22165,-1066.4306)" cx="848.29504" cy="337.51038" fx="848.29504" fy="337.51038" r="31.093124"/>
+                    <radialGradient inkscape:collect="always" xlink:href="#linearGradient8186" id="radialGradient9650" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.7228034,0,0,4.1561682,-619.22165,-1066.4306)" cx="848.29504" cy="337.51038" fx="848.29504" fy="337.51038" r="31.093124"/>
+                    <radialGradient inkscape:collect="always" xlink:href="#linearGradient8186" id="radialGradient9652" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.7228034,0,0,4.1561682,-619.22165,-1066.4306)" cx="848.29504" cy="337.51038" fx="848.29504" fy="337.51038" r="31.093124"/>
+                    <radialGradient inkscape:collect="always" xlink:href="#linearGradient8186" id="radialGradient9654" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.7228034,0,0,4.1561682,-619.22165,-1066.4306)" cx="848.29504" cy="337.51038" fx="848.29504" fy="337.51038" r="31.093124"/>
+                </defs>
+                <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1" transform="translate(-39.225133,15.694794)">
+                    <path d="m 6.7200002,104.67241 v -60.96 A 39.0358,39.0358 0 0 1 44.41,6.8024098 V 10.10241 a 35.8938,35.8938 0 0 0 -34.39,33.61 l 0.07,57.59 91.13,-0.15 v -91.05 H 44.41 V 6.8024098 H 104.6 V 104.67241 Z" class="st3" id="path22" style="fill:#99a8ce;fill-opacity:1;stroke:none;stroke-width:0.75;filter:url(#filter10995-2)" transform="matrix(1.126444,0,0,1.126444,39.225133,-15.787624)"/>
+                    <path id="path17-4" style="fill:#fffff8;fill-opacity:1;stroke:none;stroke-width:0.954631" class="st2" d="M 89.273222,-4.4189544 A 40.432358,40.432358 0 0 0 50.534654,33.440122 L 50.61384,98.312408 153.266,98.14246 V -4.4189544 Z m -1.259004,4.527776 H 148.8422 V 93.885297 H 55.144942 V 33.057312 A 35.25691,35.25691 0 0 1 88.014218,0.1088216 Z"/>
+                    <path d="M 148.809,0.1058376 H 87.981011 A 35.25691,35.25691 0 0 0 55.111374,33.054324 V 93.882305 H 148.809 Z" class="st2" id="path17" style="fill:url(#linearGradient1636);fill-opacity:1;stroke:none;stroke-width:0.844832"/>
+                    <path style="fill:url(#radialGradient4014);fill-opacity:1;stroke:none;stroke-width:0.319307;stroke-linecap:round;stroke-linejoin:round" d="M 55.124001,63.529596 C 102.89479,41.793954 132.86916,34.446915 148.82635,38.432906 v 55.43943 H 55.12399 Z" id="path3182" sodipodi:nodetypes="ccccc"/>
+                    <path style="fill:url(#linearGradient5530);fill-opacity:1;stroke:none;stroke-width:0.283465;stroke-linecap:round;stroke-linejoin:round;filter:url(#filter23178-7)" d="m 43.17647,20.03347 -14.58422,83.2815 82.08609,12.43246 6.77407,-91.25103 z" id="path4796" transform="matrix(1.126444,0,0,1.126444,39.225133,-15.787624)"/>
+                    <g id="g8180" style="fill:url(#radialGradient8190);fill-opacity:1;stroke:none" transform="matrix(1.126444,0,0,1.126444,-855.40303,-322.68505)">
+                    <path style="fill:url(#radialGradient9644);fill-opacity:1;stroke:none;stroke-width:0.283465;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" d="m 842.49151,306.39144 -0.78895,2.93036 1.74695,0.16905 -1.52153,25.13346 3.38118,0.33812 12.39767,-17.5258 -0.45083,18.65285 3.49389,0.28177 17.01002,-24.20243 1.6727,0.10707 1.11226,-3.34573 -9.82049,-0.62272 -1.22803,3.1907 2.6551,0.19211 -8.52756,13.46675 0.90165,-17.18768 -4.90271,-0.39447 -10.87614,16.56779 0.73757,-14.26258 3.01816,0.18243 0.92158,-2.88211 z" id="path7354" sodipodi:nodetypes="cccccccccccccccccccccc"/>
+                    <path style="fill:url(#radialGradient9646);fill-opacity:1;stroke:none;stroke-width:0.283465;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" d="m 899.74286,310.54996 -0.49618,5.78649 -16.2601,-1.70248 0.62024,-5.34431 z" id="path7378" sodipodi:nodetypes="ccccc"/>
+                    <path style="fill:url(#radialGradient9648);fill-opacity:1;stroke:none;stroke-width:0.283465;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" d="m 898.62621,322.87411 -0.48447,5.65383 -16.50281,-1.53779 0.5969,-5.47342 z" id="path7378-3" sodipodi:nodetypes="ccccc"/>
+                    <path style="fill:url(#radialGradient9650);fill-opacity:1;stroke:none;stroke-width:0.283465;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" d="m 897.53821,335.19183 -0.50946,5.60163 -16.69515,-1.64206 0.60273,-5.58865 z" id="path7378-3-1" sodipodi:nodetypes="ccccc"/>
+                    <path style="fill:url(#radialGradient9652);fill-opacity:1;stroke:none;stroke-width:0.283465;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" d="m 839.20282,347.31178 0.8778,-6.20329 56.37837,6.08754 -0.65723,6.8369 z" id="path7380" sodipodi:nodetypes="ccccc"/>
+                    <path style="fill:url(#radialGradient9654);fill-opacity:1;stroke:none;stroke-width:0.283465;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" d="m 837.00382,359.8703 1.03739,-6.2412 57.20795,6.94944 -0.6132,6.72441 z" id="path7380-7" sodipodi:nodetypes="ccccc"/>
+                    </g>
+                </g>
+            </svg>
         </div>
     </div>
     <div id="right_taskbar">
@@ -838,6 +1258,386 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+
+
+
+// Desktop Shortcuts Control
+const desktop = document.getElementById('desktop');
+const gridSize = 80;
+let shortcuts = Array.from(document.querySelectorAll('.desktop_shortcut'));
+let selected = new Set();
+let dragOffset = { x: 0, y: 0 };
+let activeDragIcon = null;
+let isDragging = false;
+let groupOffset = new Map(); // for formation preservation
+let dragStartMouse = null;
+
+// Load positions and names
+window.addEventListener('load', () => {
+    const desktopWidth = window.innerWidth;
+    const desktopHeight = window.innerHeight;
+
+    const cols = Math.floor(desktopWidth / gridSize);
+    const rows = Math.floor(desktopHeight / gridSize);
+    const occupied = new Set();
+
+    let col = 0, row = 0;
+
+    shortcuts.forEach(icon => {
+        const id = icon.dataset.id;
+        const saved = JSON.parse(localStorage.getItem(`shortcut_${id}`));
+
+        if (saved) {
+            icon.style.left = saved.x + 'px';
+            icon.style.top = saved.y + 'px';
+            icon.querySelector('span').innerText = saved.name || 'Unnamed Shortcut';
+            occupied.add(`${saved.x},${saved.y}`);
+        } else {
+            while (row < rows) {
+                const x = col * gridSize;
+                const y = row * gridSize;
+                const key = `${x},${y}`;
+                if (!occupied.has(key)) {
+                    icon.style.left = x + 'px';
+                    icon.style.top = y + 'px';
+                    occupied.add(key);
+                    saveShortcutState(icon);
+                    break;
+                }
+                col++;
+                if (col >= cols) {
+                    col = 0;
+                    row++;
+                }
+            }
+        }
+    });
+});
+
+// Select icon
+shortcuts.forEach(icon => {
+    icon.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+
+    // Only begin dragging if icon is already selected
+    if (!icon.classList.contains('selected')) {
+        selected.forEach(sel => sel.classList.remove('selected'));
+        selected.clear();
+        icon.classList.add('selected');
+        selected.add(icon);
+    }
+
+    // Record relative positions of each selected icon
+    groupOffset.clear();
+    dragStartMouse = { x: e.clientX, y: e.clientY };
+
+    selected.forEach(sel => {
+        const offsetX = parseInt(sel.style.left) - e.clientX;
+        const offsetY = parseInt(sel.style.top) - e.clientY;
+        groupOffset.set(sel, { offsetX, offsetY });
+    });
+
+    isDragging = true;
+});
+
+
+    const titleSpan = icon.querySelector('.title span');
+    titleSpan.addEventListener('dblclick', () => {
+        const input = document.createElement('input');
+        input.value = titleSpan.innerText;
+        input.style.width = '90%';
+        input.style.margin = '0 auto';
+        titleSpan.replaceWith(input);
+        input.focus();
+
+        input.addEventListener('blur', () => finishRename(icon, input));
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') finishRename(icon, input);
+        });
+    });
+
+});
+
+function finishRename(icon, input) {
+    const span = document.createElement('span');
+    span.innerText = input.value;
+    input.replaceWith(span);
+    saveShortcutState(icon);
+}
+
+function saveShortcutState(icon) {
+    const id = icon.dataset.id;
+    localStorage.setItem(`shortcut_${id}`, JSON.stringify({
+        name: icon.querySelector('span')?.innerText || '',
+        x: parseInt(icon.style.left),
+        y: parseInt(icon.style.top),
+    }));
+}
+
+// Drag logic
+document.addEventListener('mousemove', (e) => {
+    if (isDragging && selected.size > 0 && dragStartMouse) {
+        selected.forEach(icon => {
+            const { offsetX, offsetY } = groupOffset.get(icon);
+            const x = e.clientX + offsetX;
+            const y = e.clientY + offsetY;
+            const snapped = snapToGrid(x, y);
+            icon.style.left = snapped.x + 'px';
+            icon.style.top = snapped.y + 'px';
+        });
+    }
+});
+
+document.addEventListener('mouseup', () => {
+    if (isDragging && selected.size > 0) {
+        const usedPositions = new Set();
+
+        shortcuts.forEach(icon => {
+            if (!selected.has(icon)) {
+                const x = parseInt(icon.style.left);
+                const y = parseInt(icon.style.top);
+                usedPositions.add(`${x},${y}`);
+            }
+        });
+
+        selected.forEach(icon => {
+            const originalX = parseInt(icon.style.left);
+            const originalY = parseInt(icon.style.top);
+            const snapped = snapToGrid(originalX, originalY);
+            let key = `${snapped.x},${snapped.y}`;
+
+            // If position is occupied, find a new one
+            if (usedPositions.has(key)) {
+                const newPos = findNearestFreePosition(snapped.x, snapped.y, selected);
+                if (newPos) {
+                    icon.style.left = newPos.x + 'px';
+                    icon.style.top = newPos.y + 'px';
+                    usedPositions.add(`${newPos.x},${newPos.y}`);
+                }
+            } else {
+                icon.style.left = snapped.x + 'px';
+                icon.style.top = snapped.y + 'px';
+                usedPositions.add(key);
+            }
+
+            saveShortcutState(icon);
+        });
+    }
+
+    isDragging = false;
+    dragStartMouse = null;
+    groupOffset.clear();
+});
+
+desktop.addEventListener('mousedown', (e) => {
+    if (e.target === desktop) {
+        selected.forEach(icon => icon.classList.remove('selected'));
+        selected.clear();
+    }
+});
+
+// Check if another icon is at that position
+function isOccupiedByAnother(currentIcon, key) {
+    return shortcuts.some(icon => {
+        if (icon === currentIcon) return false;
+        const x = parseInt(icon.style.left) || 0;
+        const y = parseInt(icon.style.top) || 0;
+        const iconKey = `${x},${y}`;
+        return iconKey === key;
+    });
+}
+
+// Snap to grid
+function snapToGrid(x, y) {
+    const maxX = window.innerWidth - gridSize;
+    const maxY = window.innerHeight - gridSize;
+    const snappedX = Math.min(Math.round(x / gridSize) * gridSize, maxX);
+    const snappedY = Math.min(Math.round(y / gridSize) * gridSize, maxY);
+    return { x: snappedX, y: snappedY };
+}
+
+//locate available grid cell
+function findNearestFreePosition(x, y, excludedIcons = new Set()) {
+    const cols = Math.floor(window.innerWidth / gridSize);
+    const rows = Math.floor(window.innerHeight / gridSize);
+    const queue = [[x, y]];
+    const visited = new Set([`${x},${y}`]);
+
+    while (queue.length > 0) {
+        const [cx, cy] = queue.shift();
+        const key = `${cx},${cy}`;
+
+        const isOccupied = shortcuts.some(icon => {
+            if (excludedIcons.has(icon)) return false;
+            const ix = parseInt(icon.style.left);
+            const iy = parseInt(icon.style.top);
+            return ix === cx && iy === cy;
+        });
+
+        if (!isOccupied && cx >= 0 && cy >= 0 && cx < window.innerWidth && cy < window.innerHeight) {
+            return { x: cx, y: cy };
+        }
+
+        // Check neighbors (4 directions)
+        for (let [dx, dy] of [[1,0], [-1,0], [0,1], [0,-1]]) {
+            const nx = cx + dx * gridSize;
+            const ny = cy + dy * gridSize;
+            const nKey = `${nx},${ny}`;
+            if (!visited.has(nKey) && nx >= 0 && ny >= 0 && nx < cols * gridSize && ny < rows * gridSize) {
+                visited.add(nKey);
+                queue.push([nx, ny]);
+            }
+        }
+    }
+
+    return null; // If no free spot is found
+}
+
+// Selection box logic
+let selectionBox = null;
+let selectionStart = null;
+
+desktop.addEventListener('mousedown', (e) => {
+    if (e.target !== desktop) return;
+
+    // Start selection
+    selectionStart = { x: e.clientX, y: e.clientY };
+    selectionBox = document.createElement('div');
+    selectionBox.className = 'selection-box';
+    selectionBox.style.left = e.clientX + 'px';
+    selectionBox.style.top = e.clientY + 'px';
+    desktop.appendChild(selectionBox);
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (!selectionBox) return;
+
+    const x1 = Math.min(selectionStart.x, e.clientX);
+    const y1 = Math.min(selectionStart.y, e.clientY);
+    const x2 = Math.max(selectionStart.x, e.clientX);
+    const y2 = Math.max(selectionStart.y, e.clientY);
+
+    selectionBox.style.left = x1 + 'px';
+    selectionBox.style.top = y1 + 'px';
+    selectionBox.style.width = (x2 - x1) + 'px';
+    selectionBox.style.height = (y2 - y1) + 'px';
+
+    // Highlight all intersecting shortcuts
+    selected.forEach(icon => icon.classList.remove('selected'));
+    selected.clear();
+
+    shortcuts.forEach(icon => {
+        const rect = icon.getBoundingClientRect();
+        const intersects =
+            rect.right > x1 &&
+            rect.left < x2 &&
+            rect.bottom > y1 &&
+            rect.top < y2;
+
+        if (intersects) {
+            icon.classList.add('selected');
+            selected.add(icon);
+        }
+    });
+});
+
+document.addEventListener('mouseup', () => {
+    if (selectionBox) {
+        desktop.removeChild(selectionBox);
+        selectionBox = null;
+        selectionStart = null;
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Clock Widget functionality
+function updateClockWidget() {
+    const now = new Date();
+    const hour = now.getHours() % 12;
+    const minute = now.getMinutes();
+    const second = now.getSeconds();
+
+    document.querySelector('.hour').style.transform = `rotate(${(hour + minute / 60) * 30}deg)`;
+    document.querySelector('.minute').style.transform = `rotate(${(minute + second / 60) * 6}deg)`;
+    document.querySelector('.second').style.transform = `rotate(${second * 6}deg)`;
+}
+
+setInterval(updateClockWidget, 1000);
+updateClockWidget();
+
+
+
+// Puzzle Widget functionality
+const puzzle = document.getElementById("puzzle");
+let tiles = [];
+
+function initPuzzle() {
+    tiles = [];
+    puzzle.innerHTML = '';
+
+    for (let i = 0; i < 9; i++) {
+        const tile = document.createElement("div");
+        tile.classList.add("tile");
+        if (i < 8) {
+        tile.style.backgroundPosition = `-${(i % 3) * 100}px -${Math.floor(i / 3) * 100}px`;
+        tile.textContent = i + 1; // Optional: for debugging
+        } else {
+        tile.style.background = "transparent"; // empty space
+        tile.classList.add("empty");
+        }
+        tile.dataset.index = i;
+        tiles.push(tile);
+        puzzle.appendChild(tile);
+    }
+
+    puzzle.addEventListener("click", moveTile);
+}
+
+function moveTile(e) {
+    const tile = e.target;
+    const index = parseInt(tile.dataset.index);
+    const emptyIndex = tiles.findIndex(t => t.classList.contains("empty"));
+
+    const validMoves = [index - 1, index + 1, index - 3, index + 3].filter(i =>
+        i >= 0 && i < 9 &&
+        (Math.floor(i / 3) === Math.floor(index / 3) || i % 3 === index % 3)
+    );
+
+    if (validMoves.includes(emptyIndex)) {
+        // Swap DOM and array positions
+        [tiles[emptyIndex], tiles[index]] = [tiles[index], tiles[emptyIndex]];
+        puzzle.innerHTML = '';
+        tiles.forEach(tile => puzzle.appendChild(tile));
+    }
+}
+
+initPuzzle();
 
 
 

@@ -28,7 +28,7 @@ body {
     padding: 2px 10px;
     color: white;
     z-index: 1000;
-    border-top: 1px rgba(31, 31, 31, 0.1) solid;
+    border-top: 1px rgba(31, 31, 31, 0.5) solid;
     box-shadow: 0px 2px 6px 0px rgba(255, 255, 255, 0.2) inset;
     justify-content: space-between;
 }
@@ -38,7 +38,7 @@ body {
     padding: 2px;
     width: 50px;
     height: 42px;
-    cursor: pointer;
+    cursor: default;
 }
 .taskbar-item:hover {
     padding: 1px;
@@ -129,19 +129,108 @@ hr { color: var(--btn-color); }
     padding-left: 5px;
     padding-top: 5px;
     margin-left: -10px;
-    border: 1px rgba(31, 31, 31, 0.1) solid;
+    border: 1px rgba(31, 31, 31, 0.5) solid;
     box-shadow: -2px 4px 6px 0px rgba(255, 255, 255, 0.2) inset;
     backdrop-filter: blur(3px);
 }
 #sidebyside { display: flex; }
+/* Programs list */
 #programs_window {
     background-color: rgb(255, 255, 255);
-    border: 1px rgba(31, 31, 31, 0.5) solid;
-    border-radius: 5px 5px 0px 0px;
+    border: 1px rgba(0, 0, 0, 0.8) solid;
+    border-radius: 5px;
     height: 545px;
     width: 250px;
     overflow: hidden;
+    display: block;
+    margin: 0;
+    padding: 0;
 }
+#programs_list_container {
+    height: calc(100% - 71px);
+    margin-top: -13px;
+    padding-top: 2px;
+    margin-left: -40px;
+}
+#programs_list {
+    list-style-type: none;
+    margin: none;
+    color: black;
+}
+#programs_list li {
+    margin: 1px 2px 1px 2px;
+    padding: 4px 4px 4px 4px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    cursor: default;
+}
+#programs_list span { padding-left: 5px; }
+#programs_list svg { background-color: blue; width: 37px; height: 37px; }
+#programs_list li:hover {
+    border: 1px #5988bf solid;
+    border-radius: 3px;
+    background: linear-gradient(
+        to bottom,
+        #dfedff 0%,
+        #c1ddfe 100%
+    );
+    padding: 3px 3px 3px 3px;
+}
+#all_programs_button_container {
+    border-top: 1px #cedae7 solid;
+    height: 28px;
+    width: 230px;
+    margin: auto;
+    padding: 3px 0 0 0;
+    color: black;
+}
+#all_programs_button {
+    padding: 3px 3px 3px 3px;
+    cursor: default;
+    width: 238px;
+    height: 18px;
+    margin-left: -7px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+#all_programs_button:hover {
+    border: 1px #5988bf solid;
+    border-radius: 3px;
+    background: linear-gradient(
+        to bottom,
+        #dfedff 0%,
+        #c1ddfe 100%
+    );
+    padding: 2px 2px 2px 2px;
+}
+/* Search Programs Bar */
+#programs_search {
+    height: 51px;
+    background-color: #f3f4f9;
+    box-shadow: -2px 2px 4px 0px rgba(0, 0, 0, 0.2) inset;
+    justify-content: left;
+    align-items: center;
+    display: flex;
+    padding-left: 12px;
+}
+#programs_search_input {
+    font-size: 11px;
+    width: 210px;
+    height: 18px;
+}
+#programs_search_input:focus { outline: none; }
+#programs_search_icon {
+    position: fixed;
+    bottom: 22px;
+    right: 190px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    background-color: blue;
+}
+/* Profile Image */
 #profile_image {
     background: url('https://static.wikitide.net/windowswallpaperwiki/7/7b/User_%28Windows_7%29.png') no-repeat center center;
     background-size: cover;
@@ -168,6 +257,7 @@ hr { color: var(--btn-color); }
     top: -34px;
     right: 50px;
 }
+/* Main Directory */
 #directory_list {
     margin-top: 30px;
     width: 165px;
@@ -180,7 +270,7 @@ hr { color: var(--btn-color); }
 #directory_list li {
     margin-top: 10px;
     margin-bottom: 10px;
-    cursor: pointer;
+    cursor: default;
     padding: 5px 5px 5px 8px;
 }
 #directory_list ul hr.dark {
@@ -197,19 +287,63 @@ hr { color: var(--btn-color); }
         inset 0px 6px 10px -4px rgba(255, 255, 255, 0.2),
         inset 0px -6px 10px -4px rgba(255, 255, 255, 0.2);
 }
+.system_button {
+    background: none;
+    color: #ffffff;
+    font-size: 11px;
+    outline: 1px rgba(31, 31, 31, 0.8) solid;
+    border: 1px rgba(230, 230, 230, 0.5) solid;
+    border-radius: 3px;
+    padding: 4px 4px 4px 4px;
+    box-shadow:
+        inset 0px 6px 10px -3px rgba(255, 255, 255, 0.5),
+        inset 0px -6px 10px -4px rgba(255, 255, 255, 0.2);
+    cursor: default;
+    justify-content: flex-start;
+}
+/* Shutdown Options Menu */
+#shutdown_button { padding: 4px 8px 4px 8px; border-radius: 3px 0px 0px 3px; }
+#shutdown_options_button {
+    border-radius: 0px 3px 3px 0px;
+    width: 15px;
+    height: 13px;
+    font-size: 8px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
 #shutdown_options {
     position: fixed;
     bottom: 10px;
-    margin-left: 4px;
+    margin-left: 6px;
     padding: 8px;
     display: flex;
+}
+#shutdown_options_dropdown {
+    background: linear-gradient(
+        to right,
+        #edebee 0px,
+        #edebee 25.5px,
+        #dfdfdf 26.5px,
+        #fffffd 27px,
+        #f0f0f0 28px,
+        #f0f0f0 100%
+    );
+    border: 1px rgba(31, 31, 31, 0.5) solid;
+    border-radius: 0px;
+    box-shadow: 4px 4px 2px rgba(0,0,0,0.3);
+    z-index: 999;
+    width: 150px;
+    margin-left: 27px;
+    margin-bottom: -25px;
+    color: black;
 }
 
 /* Desktop Shortcuts Styling */
 #desktop {
     position: relative;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 40px);
 }
 .desktop_shortcut {
     position: absolute;
@@ -241,6 +375,7 @@ hr { color: var(--btn-color); }
     border: 1px #b4d4f9 solid;
     background: rgba(154, 184, 221, 0.5);
     border-radius: 2px;
+    padding: 1px;
 }
 .desktop_shortcut .title span,
 .desktop_shortcut .title input {
@@ -256,8 +391,8 @@ hr { color: var(--btn-color); }
 }
 .selection-box {
     position: absolute;
-    border: 1px dashed #89b;
-    background: rgba(100, 150, 255, 0.2);
+    border: 1px dashed #0055ff;
+    background: rgba(38, 107, 255, 0.2);
     pointer-events: none;
     z-index: 1000;
 }
@@ -318,30 +453,8 @@ hr { color: var(--btn-color); }
 }
 .add-note-btn { cursor: pointer; }
 .note-add-btn { border: none; background-color: transparent; position: absolute; top: 4px; left: 6px; font-size: 15px; font-weight: 550; } /* add new note button */
+
 /* Pick color dropdown */
-.color-menu {
-    padding: 2px;
-    background: #f0f0f0;
-    border: 1px rgba(31, 31, 31, 0.5) solid;
-    box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.3);
-    z-index: 999;
-    width: 150px;
-}
-.color-option {
-    display: flex;
-    align-items: left;
-    cursor: default;
-    padding: 3px 3px;
-}
-.color-option span { border-left: 1px rgba(31, 31, 31, 0.5) solid; padding-left: 4px;}
-.color-option:hover {
-    border-radius: 3px;
-    border: 1px #c1cdd9 solid;
-    padding: 2px 2px;
-    box-shadow:
-        inset 0px 6px 10px -4px rgba(231, 244, 255, 1),
-        inset 0px -6px 10px -4px rgba(231, 244, 255, 1);
-}
 .color-swatch {
   width: 14px;
   height: 14px;
@@ -352,23 +465,32 @@ hr { color: var(--btn-color); }
         inset 0px -6px 6px -4px rgba(0, 0, 0, 0.2);
 }
 
+
+
 /*TESTING RIIGHT CLICK DROPDOWN MENU*/
 #menu_example {
     position: fixed;
     top: 60px;
     left: 80px;
+    display: block;
 }
-.menu {
-    display: flex;
-    background: #f0f0f0;
+
+/* DROPDOWN/RIGHT-CLICK MENU STYLING */
+.menu, .right-click_menu {
+    background: linear-gradient(
+        to right,
+        #f0f0f0 0px,
+        #f0f0f0 25.5px,
+        #dfdfdf 26.5px,
+        #fffffd 27px,
+        #f0f0f0 28px,
+        #f0f0f0 100%
+    );
     border: 1px rgba(31, 31, 31, 0.5) solid;
     box-shadow: 4px 4px 2px rgba(0,0,0,0.3);
     z-index: 999;
     width: 150px;
-}
-.menu.column { display: block; }
-#icons_bar {
-    width: 20px;
+    padding: 0;
 }
 .option {
     display: flex;
@@ -376,6 +498,8 @@ hr { color: var(--btn-color); }
     cursor: default;
     padding: 3px 3px;
 }
+.option span { padding-left: 26px; }
+.option.icon span { padding-left: 6px; }
 .option:hover {
     border-radius: 3px;
     border: 1px #c1cdd9 solid;
@@ -384,17 +508,13 @@ hr { color: var(--btn-color); }
         inset 0px 6px 10px -4px rgba(231, 244, 255, 1),
         inset 0px -6px 10px -4px rgba(231, 244, 255, 1);
 }
-.options_group {
-    padding: 2px;
-    border-left: 1px rgba(31, 31, 31, 0.5) solid;
-    width: 100%;
-}
+.options_group { width: calc(100% - 4px); padding: 2px; }
 .options_group.middle {
     border-top: 1px rgba(31, 31, 31, 0.5) solid;
     border-bottom: 1px rgba(31, 31, 31, 0.5) solid;
 }
 .disabled { color: #84814c; }
-
+.disabled:hover { border: none; box-shadow: none; padding: 3px 3px; }
 
 /* Clock Widget Styling */
 .clock-widget {
@@ -477,9 +597,32 @@ hr { color: var(--btn-color); }
 
 
 
+
+
+
+/* Shutdown/Restart screens */
+#shutdown_screen,
+#sleep_overlay,
+#restart_screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    z-index: 9999;
+    color: white;
+    font-size: 2em;
+    display: none; /* hidden by default */
+    justify-content: center;
+    align-items: center;
+}
+
+
+
     </style>
 </head>
 <body>
+<!-- Desktop -->
 <div id="desktop">
     <div id="recycle_bin" class="desktop_shortcut" data-id="recycle_bin">
         <div class="icon"></div>
@@ -668,59 +811,55 @@ hr { color: var(--btn-color); }
         </div>
     </div>
     <div id="menu_example" class="menu">
-        <div id="icons_bar"></div>
-        <div class="columns">
-            <div id="copy_options" class="options_group">
-                <div class="option disabled">
-                    <span>Cut</span>
-                </div>
-                <div class="option">
-                    <span>Copy</span>
-                </div>
-                <div class="option">
-                    <span>Paste</span>
-                </div>
-                <div class="option">
-                    <span>Delete</span>
-                </div>
+        <div id="copy_options" class="options_group">
+            <div class="option disabled">
+                <span>Cut</span>
             </div>
-            <div id="text_options" class="options_group middle">
-                <div class="option">
-                    <span>Select All</span>
-                </div>
+            <div class="option">
+                <span>Copy</span>
             </div>
-            <div id="color_options" class="options_group">
-                <div class="option">
-                    <div class="color-swatch"></div>
-                    <span>White</span>
-                </div>
-                <div class="option">
-                    <div class="color-swatch"></div>
-                    <span>White</span>
-                </div>
-                <div class="option">
-                    <div class="color-swatch"></div>
-                    <span>White</span>
-                </div>
-                <div class="option">
-                    <div class="color-swatch"></div>
-                    <span>White</span>
-                </div>
-                <div class="option">
-                    <div class="color-swatch"></div>
-                    <span>White</span>
-                </div>
-                <div class="option">
-                    <div class="color-swatch"></div>
-                    <span>White</span>
-                </div>
-                <div class="option">
-                    <div class="color-swatch"></div>
-                    <span>White</span>
-                </div>
+            <div class="option">
+                <span>Paste</span>
+            </div>
+            <div class="option">
+                <span>Delete</span>
             </div>
         </div>
-        
+        <div id="text_options" class="options_group middle">
+            <div class="option">
+                <span>Select All</span>
+            </div>
+        </div>
+        <div id="color_options" class="options_group">
+            <div class="option icon">
+                <div class="color-swatch"></div>
+                <span>White</span>
+            </div>
+            <div class="option icon">
+                <div class="color-swatch"></div>
+                <span>White</span>
+            </div>
+            <div class="option icon">
+                <div class="color-swatch"></div>
+                <span>White</span>
+            </div>
+            <div class="option icon">
+                <div class="color-swatch"></div>
+                <span>White</span>
+            </div>
+            <div class="option icon">
+                <div class="color-swatch"></div>
+                <span>White</span>
+            </div>
+            <div class="option icon">
+                <div class="color-swatch"></div>
+                <span>White</span>
+            </div>
+            <div class="option icon">
+                <div class="color-swatch"></div>
+                <span>White</span>
+            </div>
+        </div>
     </div>
     <div class="widget clock-widget">
         <div class="clock-face">
@@ -736,6 +875,22 @@ hr { color: var(--btn-color); }
     
     
 </div>
+
+<!-- Sleep overlay with YouTube video -->
+<div id="sleep_overlay">
+    <div id="canvas-container">
+        <canvas id="canvas-webgl"></canvas>
+        <canvas id="canvas-2d" style="pointer-events: none"></canvas>
+    </div>
+    <script src="screensaver.js"></script>
+</div>
+  
+  <!-- Restart screen -->
+<div id="restart_screen">
+    Restarting...
+</div>
+
+<!-- Taskbar -->
 <div id="taskbar" class="taskbar">
     <div id="left_taskbar">
         <div class="dropdown">
@@ -767,11 +922,78 @@ hr { color: var(--btn-color); }
             <div id="start_menu" class="dropdown_content">
                 <div id="sidebyside">
                     <div id="programs_window">
-                        <div id="programs_list">
-                            programs list
+                        <div id="programs_list_container">
+                            <ul id="programs_list">
+                                <li id="calculator-start_menu">
+                                    <svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="8" stroke="green" stroke-width="4" fill="yellow" />
+                                    </svg>
+                                    <span>Calculator</span>
+                                </li>
+                                <li id="sticky_notes-start_menu">
+                                    <svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="8" stroke="green" stroke-width="4" fill="yellow" />
+                                    </svg>
+                                    <span>Sticky Notes</span>
+                                </li>
+                                <li id="snipping_tool-start_menu">
+                                    <svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="8" stroke="green" stroke-width="4" fill="yellow" />
+                                    </svg>
+                                    <span>Snipping Tool</span>
+                                </li>
+                                <li id="paint-start_menu">
+                                    <svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="8" stroke="green" stroke-width="4" fill="yellow" />
+                                    </svg>
+                                    <span>Paint</span>
+                                </li>
+                                <li id="magnifier-start_menu">
+                                    <svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="8" stroke="green" stroke-width="4" fill="yellow" />
+                                    </svg>
+                                    <span>Magnifier</span>
+                                </li>
+                                <li id="calculator-start_menu">
+                                    <svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="8" stroke="green" stroke-width="4" fill="yellow" />
+                                    </svg>
+                                    <span>Calculator</span>
+                                </li>
+                                <li id="sticky_notes-start_menu">
+                                    <svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="8" stroke="green" stroke-width="4" fill="yellow" />
+                                    </svg>
+                                    <span>Sticky Notes</span>
+                                </li>
+                                <li id="snipping_tool-start_menu">
+                                    <svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="8" stroke="green" stroke-width="4" fill="yellow" />
+                                    </svg>
+                                    <span>Snipping Tool</span>
+                                </li>
+                                <li id="paint-start_menu">
+                                    <svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="8" stroke="green" stroke-width="4" fill="yellow" />
+                                    </svg>
+                                    <span>Paint</span>
+                                </li>
+                                <li id="magnifier-start_menu">
+                                    <svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="8" stroke="green" stroke-width="4" fill="yellow" />
+                                    </svg>
+                                    <span>Magnifier</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="all_programs_button_container">
+                            <div id="all_programs_button"><span>►</span><span>All programs</span></div>
                         </div>
                         <div id="programs_search">
-                            programs search bar
+                            <input type="text" id="programs_search_input" placeholder="Search programs and files">
+                            <svg id="programs_search_icon" width="13px" height="13px" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="7" cy="7" r="4" stroke="green" stroke-width="4" fill="yellow" />
+                            </svg>
                         </div>
                     </div>
                     <div id="directory_sidebar">
@@ -799,9 +1021,20 @@ hr { color: var(--btn-color); }
                         <div id="shutdown_options">
                             <button id="shutdown_button" class="system_button">Shut down</button>
                             <div class="dropdown">
-                                <div class="dropdown_button system_button">></div>
-                                <div class="dropdown_content">
-                                    Shut down options
+                                <div id="shutdown_options_button" class="dropdown_button system_button"><span>►</span></div>
+                                <div class="dropdown_content menu" id="shutdown_options_dropdown">
+                                    <div class="options_group">
+                                        <div id="switch_user_button" class="option disabled"><span>Switch user</span></div>
+                                        <div id="log_off_button" class="option disabled"><span>Log off</span></div>
+                                        <div id="lock_button" class="option disabled"><span>Lock</span></div>
+                                    </div>
+                                    <div class="options_group middle">
+                                        <div id="restart_button" class="option"><span>Restart</span></div>
+                                    </div>
+                                    <div class="options_group">
+                                        <div id="sleep_button" class="option"><span>Sleep</span></div>
+                                        <div id="hibernate_button" class="option disabled"><span>Hibernate</span></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1099,15 +1332,19 @@ function applyNoteColor(note, colorKey) {
 
 // Control for right click context menu to change color
 function showColorMenu(x, y, note) {
-    const existingMenu = document.querySelector('.color-menu');
+    const existingMenu = document.querySelector('.right-click_menu');
     if (existingMenu) existingMenu.remove();
 
     const menu = document.createElement('div');
-    menu.classList.add('color-menu');
+    menu.classList.add('right-click_menu');
+
+    const group = document.createElement('div');
+    group.classList.add('options_group')
 
     Object.entries(colors).forEach(([key, val]) => {
         const option = document.createElement('div');
-        option.classList.add('color-option');
+        option.classList.add('option');
+        option.classList.add('icon');
 
         const swatch = document.createElement('div');
         swatch.classList.add('color-swatch');
@@ -1125,10 +1362,12 @@ function showColorMenu(x, y, note) {
             saveNotes();
         });
 
-        menu.appendChild(option);
+        group.appendChild(option);
     });
 
     document.body.appendChild(menu);
+    menu.appendChild(group);
+
     menu.style.position = 'absolute';
     menu.style.left = `${x}px`;
     menu.style.top = `${y}px`;
@@ -1559,6 +1798,62 @@ document.addEventListener('mouseup', () => {
 
 
 
+
+document.getElementById('shutdown_button').addEventListener('click', shutdown);
+document.getElementById('restart_button').addEventListener('click', restart);
+document.getElementById('sleep_button').addEventListener('click', sleep);
+
+// Shutdown: redirect to about:blank
+function shutdown() {
+    // Optional fake shutdown screen
+    document.body.innerHTML = `
+        <div id="shutdown_screen">
+        Shutting down...
+        </div>
+    `;
+    setTimeout(() => {
+        window.location.href = 'about:blank'; // Open blank tab
+    }, 2000);
+}
+
+// Restart: show fake restart screen, then clear and reload
+function restart() {
+    const screen = document.getElementById('restart_screen');
+    screen.style.display = 'flex';
+    setTimeout(() => {
+        localStorage.clear();
+        location.reload();
+    }, 2000);
+}
+
+// Sleep mode: show fullscreen YouTube video, exit on mouse jiggle
+function sleep() {
+    const overlay = document.getElementById('sleep_overlay');
+    overlay.style.display = 'block';
+
+    let movementCounter = 0;
+    let lastX = null;
+    let lastY = null;
+
+    function wakeUp(e) {
+        if (lastX !== null && lastY !== null) {
+        const dx = Math.abs(e.clientX - lastX);
+        const dy = Math.abs(e.clientY - lastY);
+        if (dx + dy > 1) { // only count real movement
+            movementCounter++;
+        }
+        }
+        lastX = e.clientX;
+        lastY = e.clientY;
+
+        if (movementCounter > 1) {
+        overlay.style.display = 'none';
+        document.removeEventListener('mousemove', wakeUp);
+        }
+    }
+
+    document.addEventListener('mousemove', wakeUp);
+}
 
 
 

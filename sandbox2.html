@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Windows 7 Desktop</title>
+<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #008080;
+    overflow: hidden;
+}
+
+#desktop {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.desktop_shortcut {
+    position: absolute;
+    width: 70px;
+    min-height: 70px;
+    text-align: center;
+    padding: 2px;
+    margin: 2px;
+    user-select: none;
+    cursor: default;
+}
+
+.desktop_shortcut.selected {
+    border: 1px #b4d4f9 solid;
+    background: rgba(154, 184, 221, 0.5);
+    border-radius: 2px;
+}
+
+.desktop_shortcut .title span,
+.desktop_shortcut .title input {
+    display: block;
+    color: #fff;
+    font-family: Calibri, Arial, sans-serif;
+    text-shadow: 1px 1px 2px #111;
+    width: 100%;
+    text-align: center;
+    background: transparent;
+    border: none;
+    color: white;
+}
+
+.selection-box {
+    position: absolute;
+    border: 1px dashed #89b;
+    background: rgba(100, 150, 255, 0.2);
+    pointer-events: none;
+    z-index: 1000;
+}
+
+</style>
+</head>
+<body>
+    <div id="desktop">
+        <div id="recycle_bin" class="desktop_shortcut" data-id="recycle_bin1">
+            <div class="icon"></div> 
+            <div class="title"><span>Recycle Bin1</span></div>
+        </div>
+        <div id="recycle_bin1" class="desktop_shortcut" data-id="recycle_bin2">
+            <div class="icon"></div> 
+            <div class="title"><span>Recycle Bin2</span></div>
+        </div>
+    </div>
+<script>
+const desktop = document.getElementById('desktop');
+const gridSize = 80;
+let shortcuts = Array.from(document.querySelectorAll('.desktop_shortcut'));
+let selected = new Set();
+let dragOffset = { x: 0, y: 0 };
+let activeDragIcon = null;
+let isDragging = false;
+let groupOffset = new Map(); // for formation preservation
+let dragStartMouse = null;
+
+
+
+
+// Load positions and names
+window.addEventListener('load', () => {
+    const desktopWidth = window.innerWidth;
+    const desktopHeight = window.innerHeight;
+
+    const cols = Math.floor(desktopWidth / gridSize);
+    const rows = Math.floor(desktopHeight / gridSize);
+    const occupied = new Set();
+
+    let col = 0, row = 0;
+
+    shortcuts.forEach(icon => {
+        const id = icon.dataset.id;
+        const saved = JSON.parse(localStorage.getItem(`shortcut_${id}`));
+
+        if (saved) {
+            icon.style.left = saved.x + 'px';
+            icon.style.top = saved.y + 'px';
+            icon.querySelector('span').innerText = saved.name || 'Unnamed Shortcut';
+            occupied.add(`${saved.x},${saved.y}`);
+        } else {
+            while (row < rows) {
+                const x = col * gridSize;
+                const y = row * gridSize;
+                const key = `${x},${y}`;
+                if (!occupied.has(key)) {
+                    icon.style.left = x + 'px';
+                    icon.style.top = y + 'px';
+                    occupied.add(key);
+                    saveShortcutState(icon);
+                    break;
+                }
+                col++;
+                if (col >= cols) {
+                    col = 0;
+                    row++;
+                }
+            }
+        }
+    });
+});
+
+
+
+
+// Select icon
+shortcuts.forEach(icon => {
+    icon.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+
+    // Only begin dragging if icon is already selected
+    if (!icon.classList.contains('selected')) {
+        selected.forEach(sel => sel.classList.remove('selected'));
+        selected.clear();
+        icon.classList.add('selected');
+        selected.add(icon);
+    }
+
+    // Record relative positions of each selected icon
+    groupOffset.clear();
+    dragStartMouse = { x: e.clientX, y: e.clientY };
+
+    selected.forEach(sel => {
+        const offsetX = parseInt(sel.style.left) - e.clientX;
+        const offsetY = parseInt(sel.style.top) - e.clientY;
+        groupOffset.set(sel, { offsetX, offsetY });
+    });
+
+    isDragging = true;
+});
+
+
+    const titleSpan = icon.querySelector('.title span');
+    titleSpan.addEventListener('dblclick', () => {
+        const input = document.createElement('input');
+        input.value = titleSpan.innerText;
+        input.style.width = '90%';
+        input.style.margin = '0 auto';
+        titleSpan.replaceWith(input);
+        input.focus();
+
+        input.addEventListener('blur', () => finishRename(icon, input));
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') finishRename(icon, input);
+        });
+    });
+
+});
+
+function finishRename(icon, input) {
+    const span = document.createElement('span');
+    span.innerText = input.value;
+    input.replaceWith(span);
+    saveShortcutState(icon);
+}
+
+function saveShortcutState(icon) {
+    const id = icon.dataset.id;
+    localStorage.setItem(`shortcut_${id}`, JSON.stringify({
+        name: icon.querySelector('span')?.innerText || '',
+        x: parseInt(icon.style.left),
+        y: parseInt(icon.style.top),
+    }));
+}
+
+
+// Drag logic
+document.addEventListener('mousemove', (e) => {
+    if (isDragging && selected.size > 0 && dragStartMouse) {
+        selected.forEach(icon => {
+            const { offsetX, offsetY } = groupOffset.get(icon);
+            const x = e.clientX + offsetX;
+            const y = e.clientY + offsetY;
+            const snapped = snapToGrid(x, y);
+            icon.style.left = snapped.x + 'px';
+            icon.style.top = snapped.y + 'px';
+        });
+    }
+});
+
+
+document.addEventListener('mouseup', () => {
+    if (isDragging && selected.size > 0) {
+        const usedPositions = new Set();
+
+        shortcuts.forEach(icon => {
+            if (!selected.has(icon)) {
+                const x = parseInt(icon.style.left);
+                const y = parseInt(icon.style.top);
+                usedPositions.add(`${x},${y}`);
+            }
+        });
+
+        selected.forEach(icon => {
+            const originalX = parseInt(icon.style.left);
+            const originalY = parseInt(icon.style.top);
+            const snapped = snapToGrid(originalX, originalY);
+            let key = `${snapped.x},${snapped.y}`;
+
+            // If position is occupied, find a new one
+            if (usedPositions.has(key)) {
+                const newPos = findNearestFreePosition(snapped.x, snapped.y, selected);
+                if (newPos) {
+                    icon.style.left = newPos.x + 'px';
+                    icon.style.top = newPos.y + 'px';
+                    usedPositions.add(`${newPos.x},${newPos.y}`);
+                }
+            } else {
+                icon.style.left = snapped.x + 'px';
+                icon.style.top = snapped.y + 'px';
+                usedPositions.add(key);
+            }
+
+            saveShortcutState(icon);
+        });
+    }
+
+    isDragging = false;
+    dragStartMouse = null;
+    groupOffset.clear();
+});
+
+
+
+desktop.addEventListener('mousedown', (e) => {
+    if (e.target === desktop) {
+        selected.forEach(icon => icon.classList.remove('selected'));
+        selected.clear();
+    }
+});
+
+// Check if another icon is at that position
+function isOccupiedByAnother(currentIcon, key) {
+    return shortcuts.some(icon => {
+        if (icon === currentIcon) return false;
+        const x = parseInt(icon.style.left) || 0;
+        const y = parseInt(icon.style.top) || 0;
+        const iconKey = `${x},${y}`;
+        return iconKey === key;
+    });
+}
+
+
+// Snap to grid
+function snapToGrid(x, y) {
+    const maxX = window.innerWidth - gridSize;
+    const maxY = window.innerHeight - gridSize;
+    const snappedX = Math.min(Math.round(x / gridSize) * gridSize, maxX);
+    const snappedY = Math.min(Math.round(y / gridSize) * gridSize, maxY);
+    return { x: snappedX, y: snappedY };
+}
+
+//locate available grid cell
+function findNearestFreePosition(x, y, excludedIcons = new Set()) {
+    const cols = Math.floor(window.innerWidth / gridSize);
+    const rows = Math.floor(window.innerHeight / gridSize);
+    const queue = [[x, y]];
+    const visited = new Set([`${x},${y}`]);
+
+    while (queue.length > 0) {
+        const [cx, cy] = queue.shift();
+        const key = `${cx},${cy}`;
+
+        const isOccupied = shortcuts.some(icon => {
+            if (excludedIcons.has(icon)) return false;
+            const ix = parseInt(icon.style.left);
+            const iy = parseInt(icon.style.top);
+            return ix === cx && iy === cy;
+        });
+
+        if (!isOccupied && cx >= 0 && cy >= 0 && cx < window.innerWidth && cy < window.innerHeight) {
+            return { x: cx, y: cy };
+        }
+
+        // Check neighbors (4 directions)
+        for (let [dx, dy] of [[1,0], [-1,0], [0,1], [0,-1]]) {
+            const nx = cx + dx * gridSize;
+            const ny = cy + dy * gridSize;
+            const nKey = `${nx},${ny}`;
+            if (!visited.has(nKey) && nx >= 0 && ny >= 0 && nx < cols * gridSize && ny < rows * gridSize) {
+                visited.add(nKey);
+                queue.push([nx, ny]);
+            }
+        }
+    }
+
+    return null; // If no free spot is found
+}
+
+// Selection box logic
+let selectionBox = null;
+let selectionStart = null;
+
+desktop.addEventListener('mousedown', (e) => {
+    if (e.target !== desktop) return;
+
+    // Start selection
+    selectionStart = { x: e.clientX, y: e.clientY };
+    selectionBox = document.createElement('div');
+    selectionBox.className = 'selection-box';
+    selectionBox.style.left = e.clientX + 'px';
+    selectionBox.style.top = e.clientY + 'px';
+    desktop.appendChild(selectionBox);
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (!selectionBox) return;
+
+    const x1 = Math.min(selectionStart.x, e.clientX);
+    const y1 = Math.min(selectionStart.y, e.clientY);
+    const x2 = Math.max(selectionStart.x, e.clientX);
+    const y2 = Math.max(selectionStart.y, e.clientY);
+
+    selectionBox.style.left = x1 + 'px';
+    selectionBox.style.top = y1 + 'px';
+    selectionBox.style.width = (x2 - x1) + 'px';
+    selectionBox.style.height = (y2 - y1) + 'px';
+
+    // Highlight all intersecting shortcuts
+    selected.forEach(icon => icon.classList.remove('selected'));
+    selected.clear();
+
+    shortcuts.forEach(icon => {
+        const rect = icon.getBoundingClientRect();
+        const intersects =
+            rect.right > x1 &&
+            rect.left < x2 &&
+            rect.bottom > y1 &&
+            rect.top < y2;
+
+        if (intersects) {
+            icon.classList.add('selected');
+            selected.add(icon);
+        }
+    });
+});
+
+document.addEventListener('mouseup', () => {
+    if (selectionBox) {
+        desktop.removeChild(selectionBox);
+        selectionBox = null;
+        selectionStart = null;
+    }
+});
+
+
+</script>
+</body>
+</html>
